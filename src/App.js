@@ -33,12 +33,24 @@ class App extends Component {
     this.setState({todos: todos});
   }
 
+  deleteTodo (index) {
+    const copyTodos = this.state.todos;
+    const updatedTodos = copyTodos.filter(todo => copyTodos.indexOf(todo) !== index);
+    this.setState({todos: updatedTodos })
+    //Another way I found to perform same task using splic()
+    /*const updatedTodos = this.state.todos
+    const deletedTodo = updatedTodos.splice(index,1);
+    this.setState({ todos: updatedTodos});*/
+  }
+
+
+
   render() {
     return (
       <div className="App">
         <ul>
           { this.state.todos.map((todo, index) =>
-            <ToDo key={ index } description={ todo.description } isCompleted={ todo.isCompleted } toggleComplete={ () => this.toggleComplete(index) }/>
+            <ToDo key={ index } description={ todo.description } isCompleted={ todo.isCompleted } toggleComplete={ () => this.toggleComplete(index) } deleteTodo={ () =>this.deleteTodo(index) }/>
           )}
         </ul>
         <form onSubmit={ (e)=> this.handleSubmit(e) }>
